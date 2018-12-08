@@ -1,0 +1,8 @@
+/logs
+/symfony
+/.var
+/wordpress/composer.lock
+/wordpress/vendor
+/wordpress/web/content
+/wordpress/web/wp
+
