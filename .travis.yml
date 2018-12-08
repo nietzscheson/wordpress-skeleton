@@ -1,0 +1,25 @@
+sudo: required
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.23.2
+
+services:
+  - docker
+
+hosts:
+    - localhost
+
+before_install:
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose -v
+  - docker -v
+
+script:
+  - docker-compose up --build -d
+  - docker-compose ps
+  - docker-compose run --rm php composer install
+  - docker-compose exec db mysql -V;
+  - bin/wp-install.sh
+  - curl http://localhost
